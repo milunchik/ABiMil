@@ -18,7 +18,7 @@ signBtn.addEventListener('click', async(event)=>{
     })
     .then(response=>response.json())
     .then(data=>{
-        console.log(data)
+        data.role === "admin" ? location.assign('/admin') : location.assign('/basic')
     })
     .catch(error=>{
         console.log(error)

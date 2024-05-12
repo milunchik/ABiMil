@@ -10,6 +10,10 @@ router.post('/sign-up',[
     check('password', 'Password can`t be from 4 to 10 symbols').isLength({min: 4, max:10})
 ], controller.registration)
 router.post('/sign-in', controller.login)
+router.put('/update', controller.update)
+router.delete('/delete', controller.delete)
+router.get('/admin', controller.adminAuth)
+router.get('/basic', controller.userAuth)
 router.get('/users',  roleMiddleware(['admin']), controller.getUsers)
 
 module.exports = router

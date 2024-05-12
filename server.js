@@ -10,7 +10,6 @@ mongoose.connect('mongodb+srv://emili:JC60DQOTat4LvkG2@clustertest.swdtmyv.mongo
     console.log('Connection falied', error)
 })
 
-
 const PORT = 3000
 
 app.listen(PORT, ()=>{

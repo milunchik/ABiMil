@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ABiMil</title>
+    <title>User Page</title>
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
     <%- include('blocks/header') -%>
     <div class="content">
-    <h1>About Page</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est exercitationem maxime tempore fugiat suscipit optio adipisci quod. Laboriosam sequi enim sunt delectus. Expedita veniam laudantium vero itaque laboriosam ea velit?</p>
+        <h1>Users</h1>
+        <ul class="list"></ul>
+        <button class="logout"><a href="/logout">Log Out</a></button>
     </div>
     <%- include('blocks/footer') -%>
+    <script src="/js/user.js"></script>
 </body>
 </html>
