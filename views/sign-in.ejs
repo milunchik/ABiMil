@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <%- include('blocks/header') -%>
+    
+    <form action="auth/sign-in" method="POST">
+        <div class="login-container">
+            <input type="text" class="username" name="username" placeholder="Enter the username">
+            <input type="password" class="password" name="password" placeholder="Enter the password">
+            <button type="submit" class="sign-button">Sign - in</button>
+            <p>Don`t have an account? <a href="/sign-up">Sign - up</a><p></p>
+        </div>
+    </form>
+
+    <footer>
+        <span>ABiMil</span> 
+    </footer>
+    <script src="/js/signin.js"></script>
+</body>
+</html>

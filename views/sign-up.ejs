@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <%- include('blocks/header') -%>
+
+    <form action="/auth/sign-up" method="POST">
+        <div class="login-container">
+            <input type="text" class="username" placeholder="Enter the username">
+            <input type="password" class="password" placeholder="Enter the password">
+            <button type="submit" class="sign-button">Sign - up</button>
+            <p>Have an account? <a href="/sign-in">Sign - in</a><p></p>
+        </div>
+    </form> 
+
+    <footer>
+        <span>ABiMil</span>
+    <nav>
+    </nav>  
+    </footer>
+    <script src="/js/signup.js"></script>
+</body>
+</html>
