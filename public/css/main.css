@@ -90,6 +90,7 @@ footer {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-size: 13px;
 }
 .login-container input, .login-container button{
   width: 20%;
@@ -120,4 +121,15 @@ a{
 
 p{
     font-size: 12.5px;
+}
+.users-content{
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.users-content button{
+  padding: 10px;
+  border-radius: 4px;
 }
