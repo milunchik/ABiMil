@@ -1,3 +1,7 @@
+function decodeToken(token) {
+    return jwt_decode(token)
+}
+
 const signBtn = document.querySelector('.sign-button')
 
 signBtn.addEventListener('click', async(event)=>{
@@ -6,21 +10,32 @@ signBtn.addEventListener('click', async(event)=>{
     const userName = document.querySelector('.username').value;
     const userPassword = document.querySelector('.password').value;
 
-    await fetch('/auth/sign-in', {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            username: userName,
-            password: userPassword
-        })
-    })
-    .then(response=>response.json())
-    .then(data=>{
-        data.role === "admin" ? location.assign('/admin') : location.assign('/basic')
-    })
-    .catch(error=>{
+    if (!userName || !userPassword) {
+        alert('Please fill in all fields');
+        return
+    }
+
+    try {
+        const response = await fetch('/auth/sign-in', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: userName,
+                password: userPassword
+            })
+        });
+
+        const data = await response.json()
+
+        if (response.ok) {
+            const decodedToken = decodeToken(data.token)
+            decodedToken.roles[0] === "admin" ? location.assign('/admin') : location.assign('/basic')
+        } else {
+            alert(data.message || 'Error signing in')
+        }
+    } catch (error) {
         console.log(error)
-    })
+    }
 })

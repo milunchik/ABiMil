@@ -26,7 +26,7 @@ class authController{
                 if(candidate){
                     return res.status(400).json({message: 'The name is already taken'}) 
                 }
-                    const hashPassword = bcrypt.hashSync(password, 7);
+                    let hashPassword = bcrypt.hashSync(password, 7);
 
                     const userRole = await Role.findOne({value: 'user'})
                     const user = new User ({username, password: hashPassword, roles:[userRole.value]})
@@ -52,7 +52,7 @@ class authController{
 
                         const validPassword = bcrypt.compareSync(password, user.password) 
                         if(!validPassword){
-                            return res.sat
+                            return res.status(400).json({message: 'Invalid password'})
                         }
 
                         const token = generateAccessToken(user._id, user.roles)
@@ -73,7 +73,7 @@ class authController{
                 if (err) {
                     return res.status(401).json({ message: 'Not authorized' })
                 } else {
-                    if (decodedToken.role !== 'admin') {
+                    if (!decodedToken.roles.includes('admin')) {
                         return res.status(401).json({ message: 'Not authorized' })
                     } else {
                         next()
@@ -92,7 +92,7 @@ class authController{
                 if(err){
                         return res.status(400).json({message: 'Not authorized'})
                     }else{
-                        if(decodedToken.role !='Basic'){
+                        if(decodedToken.roles !='Basic'){
                             return res.status(401).json({message: 'Not authorized'})
                         }else{
                             next()
@@ -106,10 +106,9 @@ class authController{
 
     async update(req, res){
         try{
-            const {role, id} = req.body
+            const {id} = req.params
 
-            if(role && id){
-                if(role === 'admin'){
+            if(id){
                     const user = await User.findById(id)
                     if (!user) {
                         return res.status(404).json({message: 'User not found'})
@@ -123,9 +122,6 @@ class authController{
                 } else {
                     res.status(400).json({message: 'Role must be "admin"'})
                 }
-            } else {
-               res.status(400).json({message: 'Role or Id not present'})
-            }
         }catch(error){
             console.log({message: error})
         }
@@ -133,13 +129,11 @@ class authController{
 
     async delete(req, res){
         try{
-            const {id} = req.body
-            const user = await User.findById(id)
-
+            const {id} = req.params
+            const user = await User.findByIdAndDelete({_id: id})
             if(!user){
                 return res.status(400).json({message: 'User not found'})
             }
-            await User.findByIdAndDelete({_id: id})
             res.status(200).json({message: 'Delete successfully'})
         }catch(error){
             console.log({message: error})

@@ -1,56 +1,65 @@
 const list = document.querySelector('.list')
 
-const getUsers = async(req, res)=>{
-    const res = await fetch('/auth/users')
-    const data = await res.json()
-    data.user.map(mappedUser =>{
-        if(mappedUser!= 'admin'){
-        const li = document.createElement('li')
-                li.textContent = `Username: ${mappedUser.username}\nRole: ${mappedUser.role}`
-                li.dataset.id = todo._id
-                list.appendChild(li)
-        }else{
-            return null
-        }
-        const editRole = document.querySelectorAll(".edit")
-        const deleteUser = document.querySelector(".delete")
-        editRole.forEach((button, i) => {
-            button.addEventListener('click', async() => {
-              display.textContent= ''
-              const id = data.user[i+1].id
-              const res = await fetch('/auth/update', {
-              method: 'PUT',
-              body: JSON.stringify({ role: 'admin', id}),
-              headers: { 'Content-Type': 'application/json' }
-              })
-              const dataUpdate = await res.json()
-              if (res.status === 400 || res.status === 401) {
-                document.body.scrollTop = 0
-                document.documentElement.scrollTop = 0
-                return display.textContent = `${dataUpdate.message}. ${dataUpdate.error ? dataUpdate.error : ''}`
-              }
-              location.assign('/admin')
-              })
-            })
+const getAdminUsers = async(req, res)=>{
+  
+    const response = await fetch('/auth/allusers')
 
-            deleteUser.forEach((button, i)=> {
-                button.addEventListener('click', async ()=> {
-                display.textContent =''
-                const id = data.user[i+1].id
-                const res = await fetch('/api/auth/deleteUser', {
-                  method: 'DELETE',
-                  body: JSON.stringify({id}),
-                  headers: {'Content-Type': 'application/json'}
-                  })
-                const dataDelete = await res.json()
-                if (res.status === 401){
-                  document.body.scrollTop = 0
-                  document.documentElement.scrollTop = 0
-                  return display.textContent = `${dataUpdate.message}. ${dataUpdate.error ? dataUpdate.error : ''}`
+    if(response.ok){
+      const data = await response.json()
+      console.log(data)
+      if(data){
+        data.forEach(mappedUser=>{
+            const li = document.createElement('li')
+            li.textContent = `Username: ${mappedUser.username} Role: ${mappedUser.roles[0]}`
+            li.dataset._id = mappedUser._id
+            list.appendChild(li)
+        
+            const deleteButton = document.createElement('button')
+                deleteButton.textContent = 'Delete'
+                deleteButton.classList.add('delete-button')
+                li.appendChild(deleteButton)
+            deleteButton.addEventListener('click', async() => {
+                const id = li.dataset._id
+
+                try{
+                  const response = await fetch(`/auth/delete/${id}`, {
+                    method: "DELETE"
+                })
+
+                  if(response.ok){
+                    console.log('User deleted')
+                    list.removeChild(li)
+                  }
+                }catch(err){
+                  console.log(err)
                 }
-                location.assign('/admin')
-                 })
-               })
-    })
+              })
+
+                const updateButton = document.createElement('button')
+                  updateButton.textContent = 'Update'
+                  updateButton.classList.add('update-button')
+                  li.appendChild(updateButton)
+                updateButton.addEventListener('click', async () => {
+                  console.log('update')
+                  const id = li.dataset._id
+                  try{
+                    const response = await fetch(`/auth/update/${id}`,{
+                      method: "PUT"
+                  })
+
+                  if(response.ok){
+                    console.log('User update')
+                  }
+
+                  }catch(err){
+                    console.log(err)
+                  }
+                })
+              })
+      }
+    }else{
+      console.log('Failed fetch')
+    }             
 }
 
+getAdminUsers()
