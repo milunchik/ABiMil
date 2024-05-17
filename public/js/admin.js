@@ -6,7 +6,7 @@ const getAdminUsers = async(req, res)=>{
 
     if(response.ok){
       const data = await response.json()
-      console.log(data)
+      
       if(data){
         data.forEach(mappedUser=>{
             const li = document.createElement('li')

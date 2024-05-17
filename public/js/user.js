@@ -3,10 +3,18 @@ const list = document.querySelector('.list')
 const getListUsers = async(req, res)=>{
   
   const response = await fetch('/auth/allusers')
+/*
+іконка юзера для переходу на профіль
 
+в профілі - фотка, ім'я
+аля пости,
+можливість додавати ті пости
+*/ 
+
+/*додати до сторінки-ліста юзера (басік) пости користувачів*/
   if(response.ok){
     const data = await response.json()
-    console.log(data)
+   
     if(data){
       data.forEach(mappedUser=>{
         if(mappedUser.roles[0] !=='admin'){
