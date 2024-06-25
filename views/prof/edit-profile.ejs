@@ -1,0 +1,18 @@
+<%- include('blocks/head') -%>
+</head>
+<body>
+  <%- include('blocks/header') -%>
+  <div class="user-profile">
+    <div class="profile-info">
+      <form>
+      <img src="/img/user-icon1.png" class="avatar" />
+      <input type="file">
+      <p class="username"><%= username %></p>
+      <input type="text" name="username" id="username">
+      <p>BIO</p>
+      <input type="text" name="bio" id="bio">
+    </div>
+    </form>
+  </div>
+<%- include('blocks/footer') -%>
+<%- include('blocks/end') -%>

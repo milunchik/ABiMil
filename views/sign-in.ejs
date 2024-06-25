@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="/css/main.css">
+<%- include('blocks/head') -%>
 </head>
 <body>
     <%- include('blocks/header') -%>
@@ -19,10 +13,7 @@
         </div>
     </form>
 
-    <footer>
-        <span>ABiMil</span> 
-    </footer>
+    <%- include('blocks/footer') -%>
     <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
     <script src="/js/signin.js"></script>
-</body>
-</html>
+    <%- include('blocks/end') -%>

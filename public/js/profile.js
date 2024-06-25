@@ -1,6 +1,7 @@
 const addBtn = document.querySelector('.add-posts-button');
 const postList = document.querySelector('.posts-list');
 
+<<<<<<< Updated upstream
 const getPosts = async(req, res)=>{
     const resAllPosts = await fetch('/profile/allposts');
             const data = await resAllPosts.json();
@@ -15,6 +16,19 @@ const getPosts = async(req, res)=>{
                     li.appendChild(titleAndText)
                     li.dataset.id = post._id
                     postList.appendChild(li)
+=======
+function decodeToken(token) {
+  try {
+    return jwt_decode(token);
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+}
+const addBtn = document.querySelector(".add-posts-button");
+const postList = document.querySelector(".posts-list");
+const addPostBtn = document.querySelector(".new-post");
+>>>>>>> Stashed changes
 
                     const deleteBtn = document.createElement('button')
                     deleteBtn.textContent = `Delete`
@@ -45,6 +59,7 @@ const getPosts = async(req, res)=>{
 
 getPosts()
 
+<<<<<<< Updated upstream
 const postPost = async(req, res)=>{
     const userTitle = document.querySelector('.title').value.trim();
     const userText = document.querySelector('.text').value.trim();
@@ -52,6 +67,29 @@ const postPost = async(req, res)=>{
     if (!userTitle || !userText) {
         console.error('Title and text are required.');
         return;
+=======
+async function postPost(userId, userTitle, userText) {
+  console.log("Posting data:", { userId, userTitle, userText });
+  try {
+    const response = await fetch(`/profile/${userId}/userPost`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        title: userTitle,
+        text: userText,
+      }),
+    }).catch((err) => console.log(err));
+
+    if (response.ok) {
+      getPosts(userId);
+    } else {
+      const errorData = await response.json();
+      console.log("Post failed with status:", response.status);
+      console.log("Error data:", errorData);
+>>>>>>> Stashed changes
     }
 
     try {
@@ -71,8 +109,24 @@ const postPost = async(req, res)=>{
 }
 }
 
+<<<<<<< Updated upstream
 addBtn.addEventListener('click', async(event)=>{
     event.preventDefault()
+=======
+// addPostBtn.addEventListener("click", (req, res, next) => {
+//   res.redirect("/profile/add-post");
+// });
+
+addBtn.addEventListener("click", async (event) => {
+  event.preventDefault();
+  /*
+    if(!decodedToken){
+        console.log('Falied to decod');
+    }else{
+        const userId = decodedToken.id
+        postPost(userId)
+    }*/
+>>>>>>> Stashed changes
 
     const userTitle = document.querySelector('.title').value.trim();
     const userText = document.querySelector('.text').value.trim();
