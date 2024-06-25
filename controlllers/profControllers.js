@@ -1,5 +1,4 @@
 const PostModel = require("../models/Post");
-const User = require("../models/User");
 
 const getProfile = async (req, res) => {
   try {
@@ -11,6 +10,7 @@ const getProfile = async (req, res) => {
         userId,
         isAuth: res.locals.isAuth,
       });
+
     } else {
       res.status(400).send("Username is required");
     }
