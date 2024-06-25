@@ -18,50 +18,19 @@ const getPosts = async (req, res) => {
   const userId = req.params.userId;
   try {
     const posts = await PostModel.find({ userId: userId });
-    if (posts.userId == userId) {
-      res.status(200).json({ posts });
-    }
-    if (!posts.length) {
-      res.status(200).json();
-      return console.log("There aren't posts");
-    }
+    res.status(200).json({ posts });
   } catch (err) {
     res.status(400).send(err);
   }
 };
 
 const postPost = async (req, res) => {
-  const userId = req.params.userId;
-  if (!userId) {
-    return res.status(400).send("User ID is required");
-  }
-
   try {
     const { title, text } = req.body;
-    if (!title || !text) {
-      return res.status(400).send("Title and text are required");
-    }
-    const post = new PostModel({
-      title,
-      text,
-      userId: userId,
-    });
-    const newPost = await post.save();
+    const newPost = await PostModel.create({ title, text });
     res.status(200).json(newPost);
   } catch (err) {
-    console.log("Error saving post:", err);
     res.status(400).send(err);
-  }
-};
-
-const getNewPost = async (req, res, next) => {
-  try {
-    const userId = req.user && req.user._id;
-    const username = req.params.username;
-    res.render("prof/add-post", { username, userId });
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("Internal Server Error");
   }
 };
 
@@ -95,5 +64,5 @@ module.exports = {
   postPost,
   updatePost,
   deletePost,
-  getNewPost,
+  // getNewPost,
 };

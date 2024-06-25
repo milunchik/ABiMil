@@ -4,7 +4,7 @@ const controllers = require("../controlllers/profControllers");
 
 router.get("/:username", controllers.getProfile);
 router.get("/:userId/allUserPosts", controllers.getPosts);
-router.get("/:userId/new-post", controllers.getNewPost);
+// router.get("/:userId/new-post", controllers.getNewPost);
 router.post("/:userId/userPost", controllers.postPost);
 // router.get("/edit-profle");
 // router.post("/edit-profle");
