@@ -31,7 +31,8 @@ signBtn.addEventListener('click', async(event)=>{
 
         if (response.ok) {
             const decodedToken = decodeToken(data.token)
-            decodedToken.roles[0] === "admin" ? location.assign('/admin') : location.assign('/basic')
+            localStorage.setItem('jwt', data.token);
+            decodedToken.roles[0] === "admin" ? location.assign('/admin') : location.assign(`/profile/${userName}`)
         } else {
             alert(data.message || 'Error signing in')
         }
