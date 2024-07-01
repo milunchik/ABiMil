@@ -62,18 +62,23 @@ button{
   margin-bottom: 5px;
 }
 
-.posts-list li{
+.posts-list li {
   color: black;
   background-color: ivory;
   padding: 10px;
   border: none;
   border-radius: 5px;
-  width:auto; 
+  width: auto;
 }
 
-.delete-button{
+.delete-button {
   margin: 10px;
   padding: 5px;
   border: none;
   border-radius: 3.5px;
+}
+
+img {
+  height: 30px;
+  width: auto;
 }

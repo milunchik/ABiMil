@@ -1,9 +1,12 @@
 const express = require("express");
-const app = express();
+const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const authRouter = require("./routes/authRouter");
 const profRouter = require("./routes/profRouters");
 
+const app = express();
+
+app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -18,25 +21,15 @@ app.get("/", (req, res) => {
 });
 
 app.get("/sign-in", (req, res) => {
-  res.render("sign-in");
+  res.render("auth/sign-in");
 });
 
 app.get("/sign-up", (req, res) => {
-  res.render("sign-up");
+  res.render("auth/sign-up");
 });
 
 app.get("/admin", (req, res) => {
-  res.render("admin");
-});
-
-app.get("/basic", (req, res) => {
-  let username = { username: req.query.username };
-  let userId = req.body.userId;
-  if (username) {
-    res.redirect(`/profile/${username}?userId=${userId}`);
-  } else {
-    res.status(400).send({ message: "Error" });
-  }
+  res.render("auth/admin");
 });
 
 app.post("/profile", (req, res) => {
@@ -53,4 +46,5 @@ app.get("/logout", (req, res) => {
   res.cookie("jwt", "", { maxAge: "1" });
   res.redirect("/");
 });
+
 module.exports = app;

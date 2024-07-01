@@ -38,7 +38,8 @@ class authController {
       });
       await user.save();
 
-      return res.json({ message: "User registered" });
+      const token = generateAccessToken(user._id, user.roles);
+      return res.json({ token, userId: user._id, message: "User registered" });
     } catch (error) {
       console.log(error);
       res.status(400).json({ message: "Registration error" });
@@ -63,7 +64,7 @@ class authController {
         }
 
         const token = generateAccessToken(user._id, user.roles);
-        return res.json({ token });
+        return res.json({ token, userId: user._id });
       } else {
         return res.status(400).json({
           message: "Username or Password not present",
@@ -71,6 +72,7 @@ class authController {
       }
     } catch (error) {
       console.log(error);
+      res.status(500).json({ message: "Login error" });
     }
   }
 
