@@ -1,0 +1,19 @@
+<%- include('./blocks/head') -%>
+<body>
+    <%- include('blocks/header') -%>
+    
+    <form action="auth/sign-in" method="POST">
+        <div class="login-container">
+            <h1>Login</h1>
+            <input type="text" class="username" name="username" placeholder="Enter the username">
+            <input type="password" class="password" name="password" placeholder="Enter the password">
+            <button type="submit" class="sign-button">Sign in</button>
+            <p>Don`t have an account? <a href="/sign-up">Sign up</a><p></p>
+        </div>
+    </form>
+
+    <%- include('./blocks/footer') -%>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    <script src="/js/signin.js"></script>
+</body>
+</html>
