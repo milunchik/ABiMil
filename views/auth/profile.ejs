@@ -1,0 +1,21 @@
+<%- include('../blocks/head') -%> 
+<body>
+    <%- include('../blocks/header') -%>
+    <div class="user-profile">
+        <div class="profile-info">
+                <img src="/img/user-icon1.png" class="avatar">
+                <p class="username"><%= username %></p>
+                <p>BIO</p>
+            </div>
+            <div class="post-container">
+                <h1>POSTS</h1>
+                <ul class="posts-list">
+                </ul>
+            </div>
+    </div>
+        <button class="add-posts-button"><a href="/profile/<%= username %>/addpost">Add Post</button>
+    <%- include('../blocks/footer') -%> 
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    <script src="/js/profile.js"></script>
+</body>
+</html>

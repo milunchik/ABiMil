@@ -64,6 +64,7 @@ class authController {
         }
 
         const token = generateAccessToken(user._id, user.roles);
+        res.cookie("jwt", token, { httpOnly: true, secure: false });
         return res.json({ token, userId: user._id });
       } else {
         return res.status(400).json({

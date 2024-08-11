@@ -31,6 +31,7 @@ signBtn.addEventListener("click", async (event) => {
 
     if (response.ok) {
       document.cookie = `jwt=${data.token}; path=/`;
+      localStorage.setItem("jwt", data.token);
       const decodedToken = decodeToken(data.token);
       decodedToken.roles[0] === "admin"
         ? location.assign("/admin")

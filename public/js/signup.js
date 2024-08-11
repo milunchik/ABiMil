@@ -19,6 +19,7 @@ signBtn.addEventListener("click", async (event) => {
     .then((response) => response.json())
     .then((data) => {
       document.cookie = `jwt=${data.token}; path=/`;
+      localStorage.setItem("jwt", data.token);
       data.role === "admin"
         ? location.assign("/admin")
         : location.assign("/sign-in");

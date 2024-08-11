@@ -2,10 +2,14 @@ const PostModel = require("../models/Post");
 
 const getProfile = async (req, res) => {
   try {
-    const userId = req.user && req.user._id;
+    const userId = req.params.userId;
     const username = req.params.username;
     if (username) {
-      res.render("prof/profile", { username, userId });
+      res.render("auth/profile", {
+        username,
+        userId,
+        isAuth: res.locals.isAuth,
+      });
     } else {
       res.status(400).send("Username is required");
     }
@@ -15,19 +19,42 @@ const getProfile = async (req, res) => {
 };
 
 const getPosts = async (req, res) => {
-  const userId = req.params.userId;
   try {
-    const posts = await PostModel.find({ userId: userId });
+    const posts = await PostModel.find({ userId: req.params.id });
+    if (posts === null) {
+      console.log("There aren`t posts");
+    }
+    // console.log(posts);
     res.status(200).json({ posts });
   } catch (err) {
     res.status(400).send(err);
   }
 };
 
+const getAddPage = async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+    const username = req.params.username;
+    console.log("add-post-info: " + userId, username);
+
+    res.render("prof/add-post.ejs", { username, userId });
+  } catch (err) {
+    res.status(404).send(err);
+  }
+};
+
 const postPost = async (req, res) => {
   try {
     const { title, text } = req.body;
-    const newPost = await PostModel.create({ title, text });
+    const userId = req.user.id;
+    console.log("Info: " + title, text, userId);
+    const post = new PostModel({
+      title,
+      text,
+      userId,
+    });
+    const newPost = await post.save();
+    console.log(newPost);
     res.status(200).json(newPost);
   } catch (err) {
     res.status(400).send(err);
@@ -37,8 +64,17 @@ const postPost = async (req, res) => {
 const updatePost = async (req, res) => {
   try {
     const { id } = req.params;
+    const { userId } = req.params.userId;
     const { title, text } = req.body;
-    const updatePost = await PostModel.findByIdAndUpdate(id, { title, text });
+    const updatePost = await PostModel.findByIdAndUpdate(
+      id,
+      {
+        title,
+        text,
+        userId,
+      },
+      { new: true }
+    );
     res.status(200).json(updatePost);
   } catch (err) {
     res.status(400).send(err);
@@ -64,5 +100,5 @@ module.exports = {
   postPost,
   updatePost,
   deletePost,
-  // getNewPost,
+  getAddPage,
 };
