@@ -6,46 +6,48 @@
 
 .profile-info {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   align-items: flex-start;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 .profile-info .avatar {
-  margin-right: 10px; 
+  margin-right: 10px;
 }
 
 .profile-info .bio {
-  margin-right: auto; 
+  margin-right: auto;
 }
 
 .profile-info .username {
-  margin-left: auto; 
+  margin-left: auto;
 }
 
-.post-container, .form-container{
+.post-container,
+.form-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-h1, p{
+h1,
+p {
   font-size: 16px;
 }
-.form-container{
+.form-container {
   margin-bottom: 50px;
-  }
-button{
+}
+button {
   background-color: #236921;
-    color: white;
-    font-size: 13px;
-    border: none;
-    padding: 3.5px;
-    border-radius: 1.5px;
+  color: white;
+  font-size: 13px;
+  border: none;
+  padding: 3.5px;
+  border-radius: 1.5px;
 }
 
 .posts-list {
-  list-style: none; 
+  list-style: none;
   padding: 0;
 }
 
@@ -54,7 +56,7 @@ button{
 }
 
 .posts-list p {
-  margin: 0; 
+  margin: 0;
 }
 
 .posts-list strong {
@@ -81,4 +83,20 @@ button{
 img {
   height: 30px;
   width: auto;
+}
+
+.add-post-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 100px;
+}
+
+.add-post-container input {
+  margin: 2px;
+  padding: 5px;
+}
+
+.add-posts-button {
+  padding: 7px;
 }

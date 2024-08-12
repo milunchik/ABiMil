@@ -1,10 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-const jwt = require("jsonwebtoken");
 const authRouter = require("./routes/authRouter");
 const profRouter = require("./routes/profRouters");
-const { secret } = require("./src/config");
 
 const app = express();
 

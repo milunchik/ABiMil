@@ -1,10 +1,7 @@
-const jwt = require("jsonwebtoken");
-const { secret } = require("../src/config.js");
-
 module.exports = function (roles) {
   return function (req, res, next) {
     if (req.method === "OPTIONS") {
-      next();
+      return next();
     }
 
     try {
@@ -15,14 +12,7 @@ module.exports = function (roles) {
       const decodedToken = jwt.verify(token, secret);
       const { roles: userRoles } = decodedToken;
 
-      let hasRole = false;
-      userRoles.forEach((role) => {
-        if (roles.includes(role)) {
-          hasRole = true;
-        }
-      });
-
-      if (!hasRole) {
+      if (!roles.some((role) => userRoles.includes(role))) {
         return res.status(403).json({ message: "You do not have access" });
       }
       next();
