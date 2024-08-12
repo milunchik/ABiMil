@@ -1,4 +1,5 @@
 const PostModel = require("../models/Post");
+const User = require("../models/User");
 
 const getProfile = async (req, res) => {
   try {
@@ -43,6 +44,39 @@ const getAddPage = async (req, res, next) => {
   }
 };
 
+const getEditProfilePage = async (req, res, next) => {
+  try {
+    const username = req.params.username;
+    res.status(201).render("prof/edit-profile", { username });
+  } catch (err) {
+    res.status(404).json(err);
+  }
+};
+
+const EditProfile = async (req, res, next) => {
+  try {
+    const username = req.body.username;
+    const bio = req.body.bio;
+    let avatar;
+    if (req.file) {
+      avatar = req.file.path;
+    }
+    const user = await User.findOneAndUpdate(
+      { username: req.params.username },
+      {
+        username: username,
+        bio: bio,
+        avatar: avatar,
+      },
+      { new: true }
+    );
+    await user.save();
+    res.status(201).json({ message: "Profile updated successfully" });
+  } catch (err) {
+    res.status(404).json(err);
+  }
+};
+
 const postPost = async (req, res) => {
   try {
     const { title, text } = req.body;
@@ -64,14 +98,12 @@ const postPost = async (req, res) => {
 const updatePost = async (req, res) => {
   try {
     const { id } = req.params;
-    const { userId } = req.params.userId;
     const { title, text } = req.body;
     const updatePost = await PostModel.findByIdAndUpdate(
       id,
       {
         title,
         text,
-        userId,
       },
       { new: true }
     );
@@ -101,4 +133,6 @@ module.exports = {
   updatePost,
   deletePost,
   getAddPage,
+  getEditProfilePage,
+  EditProfile,
 };
