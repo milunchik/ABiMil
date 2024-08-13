@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const authRouter = require("./routes/authRouter");
@@ -15,6 +16,7 @@ app.use("/auth", authRouter);
 app.set("view engine", "ejs");
 app.set("views", "./views");
 app.use(express.static("public"));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.get("/", (req, res) => {
   res.render("index", {

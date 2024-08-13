@@ -1,15 +1,15 @@
 <%- include('../blocks/head') -%>
 </head>
 <body>
-  <%- include('../blocks/prof-header') -%>
+  <%- include('../blocks/header') -%>
 
   <div class="add-post-container">
-    <form action="/profile/<%= userId %>/newPost" method="POST">
+    <form action="/profile/<%= username %>/newpost" method="POST">
       <input type="text" class="title" name="title" placeholder="Enter the title" />
       <input type="text" class="text" name="text" placeholder="Enter the text" />
       <button type="submit" class="add-posts-button">Add</button>
     </form>    
   </div>
-<script src="/js/profile.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
   <%- include('../blocks/footer') -%>
   <%- include('../blocks/end') -%>

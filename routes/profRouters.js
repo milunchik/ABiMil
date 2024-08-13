@@ -13,9 +13,9 @@ router.post(
   controllers.EditProfile
 );
 
-router.get("/:userId/allUserPosts", isAuth, controllers.getPosts);
-router.get("/:username/addpost", isAuth, controllers.getAddPage);
-router.post("/post", isAuth, controllers.postPost);
+router.get("/:userId/posts", isAuth, controllers.getPosts);
+router.get("/:username/newpost", isAuth, controllers.getAddPage);
+router.post("/:username/newpost", isAuth, controllers.postPost);
 
 router.put("/update/:id", isAuth, controllers.updatePost);
 router.delete("/delete/:id", isAuth, controllers.deletePost);

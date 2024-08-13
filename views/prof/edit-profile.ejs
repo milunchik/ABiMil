@@ -4,12 +4,12 @@
   <%- include('../blocks/header') -%>
   <div class="user-profile">
     <div class="add-post-container">
-      <form action="profile/<%username%>/update" method="POST">
-      <input type="file" name="avatar" placeholder="Add avatar">
-      <input type="text" name="username" id="username" placeholder="username">
-      <input type="text" name="bio" id="bio" placeholder="BIO">
-    <button type="submit">Update</button>
-    </form>
+      <form method="POST" action="/profile/<%=username%>/update">
+        <input type="file" name="avatar" placeholder="Add avatar">
+        <input type="text" name="username" id="username" placeholder="Enter the username">
+        <input type="text" name="bio" id="bio" placeholder="Enter the bIO">
+        <button type="submit">Update</button>
+      </form>
   </div>
   </div>
 <%- include('../blocks/footer') -%>
