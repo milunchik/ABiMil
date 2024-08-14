@@ -1,0 +1,15 @@
+<%-include('../blocks/head')%>
+<body>
+    <%-include('../blocks/header')%>
+<main>
+    <form class="login-container" action="/reset" method="POST">
+        <div>
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username">
+        </div>
+            <button>Reset</button>
+    </form>
+</main>
+</body>
+<%-include('../blocks/footer')%>
+<%-include('../blocks/end')%>

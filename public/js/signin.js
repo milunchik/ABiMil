@@ -16,7 +16,7 @@ signBtn.addEventListener("click", async (event) => {
   }
 
   try {
-    const response = await fetch("/auth/sign-in", {
+    const response = await fetch("/sign-in", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

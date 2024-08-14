@@ -4,14 +4,17 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const authRouter = require("./routes/authRouter");
 const profRouter = require("./routes/profRouters");
+const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+
 app.use("/profile", profRouter);
-app.use("/auth", authRouter);
+app.use(authRouter);
+app.use(userRoutes);
 
 app.set("view engine", "ejs");
 app.set("views", "./views");
@@ -35,7 +38,7 @@ app.get("/sign-up", (req, res) => {
 });
 
 app.get("/admin", (req, res) => {
-  res.render("auth/admin", {
+  res.render("/admin", {
     isAuth: res.locals.isAuth,
     userId: res.locals.userId,
     username: res.locals.username,
@@ -48,11 +51,6 @@ app.post("/profile", (req, res) => {
   } else {
     res.status(400).send({ message: "Error" });
   }
-});
-
-app.get("/logout", (req, res) => {
-  res.cookie("jwt", "", { maxAge: 1 });
-  res.redirect("/");
 });
 
 module.exports = app;
