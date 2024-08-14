@@ -1,7 +1,7 @@
 const list = document.querySelector(".list");
 
 const getListUsers = async (req, res) => {
-  const response = await fetch("/auth/allusers");
+  const response = await fetch("/users");
   if (response.ok) {
     const data = await response.json();
 

@@ -2,10 +2,8 @@ const Router = require("express");
 const router = new Router();
 const controller = require("../controlllers/authControllers");
 const { check } = require("express-validator");
-const authMiddleware = require("../middleware/authMidleware");
-const roleMiddleware = require("../middleware/roleMiddleware");
+const isAuth = require("../middleware/isAuth");
 
-router.get("/allusers", controller.getUsers);
 router.post("/sign-in", controller.login);
 router.post(
   "/sign-up",
@@ -18,9 +16,13 @@ router.post(
   ],
   controller.registration
 );
-router.get("/admin", authMiddleware, controller.adminAuth);
-router.get("/basic", authMiddleware, controller.userAuth);
-router.put("/update/:id", controller.update);
-router.delete("/delete/:id", controller.delete);
+
+router.get("/reset", isAuth, controller.getReset);
+router.post("/reset", isAuth, controller.postReset);
+
+router.get("/reset/:token", isAuth, controller.getNewPassword);
+router.post("/newpassword", isAuth, controller.postNewPassword);
+
+router.get("/logout", controller.logout);
 
 module.exports = router;

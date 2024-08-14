@@ -7,6 +7,8 @@ const User = new Schema({
   posts: [{ type: Object, ref: "Post" }],
   bio: { type: String, default: "BIO", required: true },
   avatar: { type: String, default: "/img/user-icon1.png", required: true },
+  resetToken: String,
+  resetTokenExpiration: Date,
 });
 
 module.exports = model("User", User);
