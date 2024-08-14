@@ -1,5 +1,6 @@
 const User = require("../models/User.js");
 const Role = require("../models/Role.js");
+const Post = require("../models/Post.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
@@ -83,8 +84,6 @@ const getReset = async (req, res) => {
     res.status(200).render("auth/reset");
   } catch (error) {
     console.log(error);
-    /*вводиться ім'я
-    потім воно хешується і додається в роут і заргужається сторінка зі зміною пароля*/
   }
 };
 
@@ -161,6 +160,26 @@ const postNewPassword = async (req, res) => {
   }
 };
 
+const getAllPosts = async (req, res) => {
+  try {
+    const posts = await Post.find();
+
+    for (const post of posts) {
+      const user = await User.findById(post.userId).lean();
+      post.username = user ? user.username : "Unknown";
+    }
+
+    res.render("index", {
+      isAuth: res.locals.isAuth,
+      userId: res.locals.userId,
+      username: res.locals.username,
+      posts: posts,
+    });
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+
 const logout = async (req, res) => {
   res.cookie("jwt", "", { maxAge: 1 });
   res.redirect("/");
@@ -172,6 +191,7 @@ module.exports = {
   getReset,
   postReset,
   logout,
+  getAllPosts,
   getNewPassword,
   postNewPassword,
 };

@@ -21,14 +21,6 @@ app.set("views", "./views");
 app.use(express.static("public"));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-app.get("/", (req, res) => {
-  res.render("index", {
-    isAuth: res.locals.isAuth,
-    userId: res.locals.userId,
-    username: res.locals.username,
-  });
-});
-
 app.get("/sign-in", (req, res) => {
   res.render("auth/sign-in", { isAuth: false });
 });

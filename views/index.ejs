@@ -6,5 +6,19 @@
         <h1>Main Page</h1>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est exercitationem maxime tempore fugiat suscipit optio adipisci quod. Laboriosam sequi enim sunt delectus. Expedita veniam laudantium vero itaque laboriosam ea velit?</p>
     </div>
+    
+    <div class="posts">
+        <% posts.forEach(post => { %>
+            <div class="post-container">
+                <div class="post" id="<%= post._id %>">
+                    <h2><%= post.title %></h2>
+                    <p><%= post.text %></p>
+                    <span>User: <%= post.username %></span><br>
+                </div> 
+            </div>
+        <% }) %>
+    </div>
+   
+    
     <%- include('blocks/footer') -%>
     <%- include('blocks/end') -%>

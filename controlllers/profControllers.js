@@ -1,4 +1,4 @@
-const PostModel = require("../models/Post");
+const Post = require("../models/Post");
 const User = require("../models/User");
 
 const getProfile = async (req, res) => {
@@ -24,7 +24,7 @@ const getProfile = async (req, res) => {
 const getPosts = async (req, res) => {
   try {
     const userId = req.params.userId;
-    const posts = await PostModel.find({ userId: userId });
+    const posts = await Post.find({ userId: userId });
     console.log(posts);
     res.status(200).json({ posts: posts, userId });
   } catch (err) {
@@ -84,7 +84,7 @@ const postPost = async (req, res) => {
     const username = req.params.username;
     const { title, text } = req.body;
     const userId = req.user.id;
-    const post = new PostModel({
+    const post = new Post({
       title,
       text,
       userId,
@@ -105,7 +105,7 @@ const updatePost = async (req, res) => {
     const username = req.params.username;
     const { id } = req.params;
     const { title, text } = req.body;
-    const updatePost = await PostModel.findByIdAndUpdate(
+    const updatePost = await Post.findByIdAndUpdate(
       id,
       {
         title,
@@ -122,7 +122,7 @@ const updatePost = async (req, res) => {
 const deletePost = async (req, res) => {
   try {
     const { id } = req.params;
-    const deletePost = await PostModel.findByIdAndDelete(id);
+    const deletePost = await Post.findByIdAndDelete(id);
     if (!deletePost) {
       return res.status(401).json({ message: "Post not found" });
     }
