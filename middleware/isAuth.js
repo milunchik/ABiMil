@@ -19,7 +19,7 @@ function isAuth(req, res, next) {
     res.locals.userId = decodedToken.id;
     res.locals.username = decodedToken.username;
     next();
-  } catch (error) {
+  } catch (err) {
     console.log("from catch");
     res.locals.isAuth = false;
     res.locals.userId = null;

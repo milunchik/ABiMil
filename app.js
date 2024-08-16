@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const authRouter = require("./routes/authRouter");
 const profRouter = require("./routes/profRouters");
 const userRoutes = require("./routes/userRoutes");
+const errorControllers = require("./controllers/error");
 
 const app = express();
 
@@ -30,7 +31,7 @@ app.get("/sign-up", (req, res) => {
 });
 
 app.get("/admin", (req, res) => {
-  res.render("/admin", {
+  res.render("admin", {
     isAuth: res.locals.isAuth,
     userId: res.locals.userId,
     username: res.locals.username,
@@ -43,6 +44,20 @@ app.post("/profile", (req, res) => {
   } else {
     res.status(400).send({ message: "Error" });
   }
+});
+
+app.use((req, res, next) => {
+  res.status(404).render("errors/404", {
+    isAuth: res.locals.isAuth,
+  });
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  if (err.statusCode === 500) {
+    errorControllers.get500;
+  }
+  next(err);
 });
 
 module.exports = app;

@@ -1,21 +1,27 @@
+const newError = require("./error.js").newError;
+
 const adminAuth = async (req, res, next) => {
-  const token = req.cookies.jwt;
-  if (token) {
-    jwt.verify(token, secret, (err, decodedToken) => {
-      if (err) {
-        return res.status(401).json({ message: "Not authorized" });
-      } else {
-        if (!decodedToken.roles.includes("admin")) {
+  try {
+    const token = req.cookies.jwt;
+    if (token) {
+      jwt.verify(token, secret, (err, decodedToken) => {
+        if (err) {
           return res.status(401).json({ message: "Not authorized" });
         } else {
-          next();
+          if (!decodedToken.roles.includes("admin")) {
+            return res.status(401).json({ message: "Not authorized" });
+          } else {
+            next();
+          }
         }
-      }
-    });
-  } else {
-    return res
-      .status(401)
-      .json({ message: "Not authorized, token not available" });
+      });
+    } else {
+      return res
+        .status(401)
+        .json({ message: "Not authorized, token not available" });
+    }
+  } catch (err) {
+    newError(err, next);
   }
 };
 
@@ -58,8 +64,8 @@ const updateUser = async (req, res) => {
     } else {
       res.status(400).json({ message: 'Role must be "admin"' });
     }
-  } catch (error) {
-    console.log({ message: error });
+  } catch (err) {
+    newError(err, next);
   }
 };
 
@@ -71,8 +77,8 @@ const deleteUser = async (req, res) => {
       return res.status(400).json({ message: "User not found" });
     }
     res.status(200).json({ message: "Delete successfully" });
-  } catch (error) {
-    console.log({ message: error });
+  } catch (err) {
+    newError(err, next);
   }
 };
 
@@ -80,8 +86,8 @@ const getUsers = async (req, res) => {
   try {
     const users = await User.find();
     res.json(users);
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    newError(err, next);
   }
 };
 

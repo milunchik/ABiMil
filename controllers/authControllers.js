@@ -3,6 +3,7 @@ const Role = require("../models/Role.js");
 const Post = require("../models/Post.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const newError = require("./error.js").newError;
 const { validationResult } = require("express-validator");
 const { secret } = require("../src/config.js");
 const crypto = require("crypto");
@@ -44,9 +45,8 @@ const registration = async (req, res) => {
 
     const token = generateAccessToken(user._id, user.roles);
     return res.json({ token, userId: user._id, message: "User registered" });
-  } catch (error) {
-    console.log(error);
-    res.status(400).json({ message: "Registration error" });
+  } catch (err) {
+    newError(err, next);
   }
 };
 
@@ -75,17 +75,16 @@ const login = async (req, res) => {
         message: "Username or Password not present",
       });
     }
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Login error" });
+  } catch (err) {
+    newError(err, next);
   }
 };
 
 const getReset = async (req, res) => {
   try {
     res.status(200).render("auth/reset");
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    newError(err, next);
   }
 };
 
@@ -111,7 +110,7 @@ const postReset = async (req, res) => {
 
     res.status(201).redirect(`/reset/${resetToken}`);
   } catch (err) {
-    console.log(err);
+    newError(err, next);
   }
 };
 
@@ -129,9 +128,8 @@ const getNewPassword = async (req, res) => {
     }
 
     res.render("auth/new-password", { token, userId: user._id });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Server error" });
+  } catch (err) {
+    newError(err, next);
   }
 };
 
@@ -156,9 +154,8 @@ const postNewPassword = async (req, res) => {
       resetUser.save();
       return res.redirect("/");
     }
-  } catch (error) {
-    console.log(error);
-    res.redirect("/");
+  } catch (err) {
+    newError(err, next);
   }
 };
 
@@ -191,7 +188,7 @@ const getAllPosts = async (req, res) => {
       lastPage: Math.ceil(totalProducts / itemOnPage),
     });
   } catch (error) {
-    res.status(400).send(error);
+    newError(err, next);
   }
 };
 

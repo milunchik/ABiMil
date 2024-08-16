@@ -1,6 +1,8 @@
 const Post = require("../models/Post");
 const User = require("../models/User");
 
+const newError = require("./error.js").newError;
+
 const getProfile = async (req, res) => {
   try {
     const username = req.params.username;
@@ -17,7 +19,7 @@ const getProfile = async (req, res) => {
       isAuth: res.locals.isAuth,
     });
   } catch (err) {
-    console.log(err);
+    newError(err, next);
   }
 };
 
@@ -28,7 +30,7 @@ const getPosts = async (req, res) => {
     console.log(posts);
     res.status(200).json({ posts: posts, userId });
   } catch (err) {
-    res.status(400).send(err);
+    newError(err, next);
   }
 };
 
@@ -39,7 +41,7 @@ const getAddPage = async (req, res, next) => {
     console.log("getAddPage: ", userId, username);
     res.render("prof/add-post", { username, userId });
   } catch (err) {
-    res.status(404).send(err);
+    newError(err, next);
   }
 };
 
@@ -49,7 +51,7 @@ const getEditProfilePage = async (req, res, next) => {
     console.log(username);
     res.status(200).render("prof/edit-profile", { username });
   } catch (err) {
-    res.status(404).json(err);
+    newError(err, next);
   }
 };
 
@@ -75,7 +77,7 @@ const EditProfile = async (req, res, next) => {
     await user.save();
     res.status(201).redirect(`profile/${username}`);
   } catch (err) {
-    res.status(404).json(err);
+    newError(err, next);
   }
 };
 
@@ -90,13 +92,12 @@ const postPost = async (req, res) => {
       userId,
     });
     const newPost = await post.save();
-    console.log(newPost);
 
     await User.findByIdAndUpdate(userId, { $push: { posts: newPost._id } });
 
     res.status(201).redirect(`profile/${username}`);
   } catch (err) {
-    res.status(400).send(err);
+    newError(err, next);
   }
 };
 
@@ -105,7 +106,7 @@ const updatePost = async (req, res) => {
     const username = req.params.username;
     const { id } = req.params;
     const { title, text } = req.body;
-    const updatePost = await Post.findByIdAndUpdate(
+    await Post.findByIdAndUpdate(
       id,
       {
         title,
@@ -115,7 +116,7 @@ const updatePost = async (req, res) => {
     );
     res.status(201).redirect(`profile/${username}`);
   } catch (err) {
-    res.status(400).send(err);
+    newError(err, next);
   }
 };
 
@@ -130,7 +131,7 @@ const deletePost = async (req, res) => {
 
     res.status(201).json({ message: "Post deleted" });
   } catch (err) {
-    res.status(400).json(err);
+    newError(err, next);
   }
 };
 
