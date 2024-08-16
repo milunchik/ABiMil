@@ -7,6 +7,8 @@ const { validationResult } = require("express-validator");
 const { secret } = require("../src/config.js");
 const crypto = require("crypto");
 
+const itemOnPage = 3;
+
 const generateAccessToken = (id, roles) => {
   const payload = {
     id,
@@ -162,7 +164,14 @@ const postNewPassword = async (req, res) => {
 
 const getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find();
+    const page = +req.query.page || 1;
+    let totalProducts;
+    const numProducts = await Post.find().countDocuments();
+    totalProducts = numProducts;
+
+    const posts = await Post.find()
+      .skip((page - 1) * itemOnPage)
+      .limit(itemOnPage);
 
     for (const post of posts) {
       const user = await User.findById(post.userId).lean();
@@ -174,6 +183,12 @@ const getAllPosts = async (req, res) => {
       userId: res.locals.userId,
       username: res.locals.username,
       posts: posts,
+      currentPage: page,
+      hasNextPage: itemOnPage * page < totalProducts,
+      hasPreviousPage: page > 1,
+      nextPage: page + 1,
+      previousPage: page - 1,
+      lastPage: Math.ceil(totalProducts / itemOnPage),
     });
   } catch (error) {
     res.status(400).send(error);

@@ -138,3 +138,23 @@ p {
 .logo {
   height: 45px;
 }
+
+.pagination {
+  margin: 2rem;
+  margin-top: 220px;
+  text-align: center;
+}
+.pagination a {
+  text-decoration: none;
+  color: #09542de9;
+  padding: 0.5rem;
+  border: 1px solid #1c551a;
+  border-radius: 10px;
+  margin: 0 1rem;
+}
+.pagination a:hover,
+.pagination a:active,
+.pagination a.active {
+  background-color: #1c551a;
+  color: white;
+}
