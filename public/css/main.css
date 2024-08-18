@@ -66,10 +66,6 @@ button {
   border-radius: 1.5px;
 }
 
-.content {
-  margin-top: 100px;
-}
-
 footer {
   margin-bottom: 0;
   background-color: #333;
@@ -141,7 +137,7 @@ p {
 
 .pagination {
   margin: 2rem;
-  margin-top: 220px;
+  margin-top: 20px;
   text-align: center;
 }
 .pagination a {
@@ -195,6 +191,8 @@ h3 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 110px;
+  margin-right: 15px;
 }
 h1,
 p {
@@ -215,10 +213,18 @@ button {
 .posts-list {
   list-style: none;
   padding: 0;
+  margin: 0;
+  width: 100%;
+  max-width: 800px;
 }
 
 .posts-list li {
+  background-color: #fff;
+  color: #333;
+  padding: 15px;
+  border-radius: 8px;
   margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .posts-list p {
@@ -230,20 +236,19 @@ button {
   margin-bottom: 5px;
 }
 
-.posts-list li {
-  color: black;
-  background-color: ivory;
-  padding: 10px;
+.delete-button {
+  background-color: #e74c3c;
+  color: white;
   border: none;
   border-radius: 5px;
-  width: auto;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.delete-button {
-  margin: 10px;
-  padding: 5px;
-  border: none;
-  border-radius: 3.5px;
+.delete-button:hover {
+  margin-top: 3px;
+  background-color: #c0392b;
 }
 
 img {
@@ -263,8 +268,34 @@ img {
   padding: 5px;
 }
 
+.user-profile input[type="file"],
+.user-profile input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
 .add-posts-button {
   padding: 7px;
+}
+.user-profile button {
+  background-color: #236921;
+  color: white;
+  font-size: 14px;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.user-profile button:hover {
+  margin-top: 8px;
+  background-color: #c0392b;
 }
 
 .posts {
@@ -283,7 +314,8 @@ img {
 }
 
 .post {
-  width: 250px;
+  width: 300px;
+  height: 350px;
   background-color: #2d5721;
   color: #fff;
   margin: 15px;
@@ -312,4 +344,56 @@ img {
 .post:hover {
   transform: translateY(-10px);
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.reset-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60px;
+  padding: 20px;
+  background-color: rgba(65, 64, 64, 0.696);
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.reset-container h1 {
+  font-size: 24px;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.reset-container form {
+  width: 100%;
+}
+
+.reset-container input[type="text"] {
+  width: 95%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+}
+
+.reset-container button {
+  background-color: #236921;
+  color: white;
+  font-size: 14px;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  width: 100%;
+}
+
+.reset-container button:hover {
+  background-color: #1c551a;
+  transform: scale(1.05);
 }

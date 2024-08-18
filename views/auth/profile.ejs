@@ -3,16 +3,16 @@
     <%- include('../blocks/header') -%>
     <div class="user-profile">
         <div class="profile-info">
-                <img src="<%=avatar %>" class="avatar">
-                <p class="username"><%= username %></p>
-                <p><%=bio %></p>
-            </div>
-            <div class="post-container">
-                <h1>POSTS</h1>
-            </div>
+            <img src="<%= avatar %>" class="avatar" alt="Avatar">
+            <p class="username"><%= username %></p>
+            <p><%= bio %></p>
+        </div>
+        <div class="post-container">
+            <h1>POSTS</h1>
+            <ul class="posts-list"></ul>
+        </div>
     </div>
-    <%- include('../blocks/footer') -%> 
     <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
     <script src="/js/profile.js"></script>
-</body>
-</html>
+    <%- include('../blocks/footer') -%> 
+    <%- include('../blocks/end') -%> 
