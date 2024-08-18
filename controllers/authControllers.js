@@ -84,7 +84,7 @@ const login = async (req, res, next) => {
   }
 };
 
-const getReset = async (req, res) => {
+const getReset = async (req, res, next) => {
   try {
     res.status(200).render("auth/reset");
   } catch (err) {
@@ -92,7 +92,7 @@ const getReset = async (req, res) => {
   }
 };
 
-const postReset = async (req, res) => {
+const postReset = async (req, res, next) => {
   try {
     const username = req.body.username;
     const user = await User.findOne({ username: username });
@@ -118,7 +118,7 @@ const postReset = async (req, res) => {
   }
 };
 
-const getNewPassword = async (req, res) => {
+const getNewPassword = async (req, res, next) => {
   try {
     const token = req.params.token;
     console.log("токен з параметрів " + token);
@@ -137,7 +137,7 @@ const getNewPassword = async (req, res) => {
   }
 };
 
-const postNewPassword = async (req, res) => {
+const postNewPassword = async (req, res, next) => {
   try {
     const newPassword = req.body.password;
     const userId = req.body.userId;
@@ -163,7 +163,7 @@ const postNewPassword = async (req, res) => {
   }
 };
 
-const getAllPosts = async (req, res) => {
+const getAllPosts = async (req, res, next) => {
   try {
     const page = +req.query.page || 1;
     let totalProducts;
@@ -197,7 +197,6 @@ const getAllPosts = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-  // res.localStorage.removeItem("jwt");
   res.cookie("jwt", "", { maxAge: 1 });
   res.redirect("/");
 };
