@@ -50,9 +50,20 @@ async function getPosts(userId, postList) {
 
       data.posts.forEach((post) => {
         const li = document.createElement("li");
+
         const titleAndText = document.createElement("p");
         titleAndText.innerHTML = `<strong>${post.title}</strong><br>${post.text}`;
         li.appendChild(titleAndText);
+
+        if (post.imgUrl) {
+          const img = document.createElement("img");
+          const div = document.createElement("div");
+          div.classList.add("image-container");
+          img.src = post.imgUrl;
+          div.appendChild(img);
+          li.appendChild(div);
+        }
+
         li.dataset.id = post._id;
         postList.appendChild(li);
 
