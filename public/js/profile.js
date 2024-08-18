@@ -63,6 +63,7 @@ async function getPosts(userId) {
 }
 
 async function deletePost(userId, postId) {
+async function deletePost( postId) {
   try {
     const response = await fetch(`/profile/delete/${postId}`, {
       method: "DELETE",
