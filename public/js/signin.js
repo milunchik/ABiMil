@@ -30,12 +30,15 @@ signBtn.addEventListener("click", async (event) => {
     const data = await response.json();
 
     if (response.ok) {
-      document.cookie = `jwt=${data.token}; path=/`;
       localStorage.setItem("jwt", data.token);
+
       const decodedToken = decodeToken(data.token);
-      decodedToken.roles[0] === "admin"
-        ? location.assign("/admin")
-        : location.assign(`/profile/${userName}`);
+
+      if (decodedToken.roles.includes("admin")) {
+        location.assign("/admin");
+      } else {
+        location.assign(`/profile/${userName}`);
+      }
     } else {
       alert(data.message || "Error signing in");
     }

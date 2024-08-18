@@ -50,7 +50,7 @@ const registration = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
+const login = async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
@@ -68,7 +68,11 @@ const login = async (req, res) => {
       }
 
       const token = generateAccessToken(user._id, user.roles);
+
+      res.set("Authorization", `Bearer ${token}`);
+      console.log(token);
       res.cookie("jwt", token, { httpOnly: true, secure: false });
+
       return res.json({ token, userId: user._id, username });
     } else {
       return res.status(400).json({
@@ -193,6 +197,7 @@ const getAllPosts = async (req, res) => {
 };
 
 const logout = async (req, res) => {
+  // res.localStorage.removeItem("jwt");
   res.cookie("jwt", "", { maxAge: 1 });
   res.redirect("/");
 };

@@ -1,4 +1,7 @@
+const User = require("../models/User.js");
+const jwt = require("jsonwebtoken");
 const newError = require("./error.js").newError;
+const { secret } = require("../src/config.js");
 
 const adminAuth = async (req, res, next) => {
   try {
@@ -76,7 +79,7 @@ const deleteUser = async (req, res) => {
     if (!user) {
       return res.status(400).json({ message: "User not found" });
     }
-    res.status(200).json({ message: "Delete successfully" });
+    return res.status(200).json({ message: "Delete successfully" });
   } catch (err) {
     newError(err, next);
   }
@@ -85,7 +88,7 @@ const deleteUser = async (req, res) => {
 const getUsers = async (req, res) => {
   try {
     const users = await User.find();
-    res.json(users);
+    res.status(200).json(users);
   } catch (err) {
     newError(err, next);
   }

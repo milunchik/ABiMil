@@ -3,14 +3,14 @@ const User = require("../models/User");
 
 const newError = require("./error.js").newError;
 
-const getProfile = async (req, res) => {
+const getProfile = async (req, res, next) => {
   try {
     const username = req.params.username;
     const user = await User.findOne({ username: username });
     if (!user) {
       res.status(404).json({ message: "User not found!" });
     }
-    res.render("auth/profile", {
+    return res.render("auth/profile", {
       username: user.username,
       bio: user.bio,
       avatar: user.avatar,
@@ -23,12 +23,11 @@ const getProfile = async (req, res) => {
   }
 };
 
-const getPosts = async (req, res) => {
+const getPosts = async (req, res, next) => {
   try {
     const userId = req.params.userId;
     const posts = await Post.find({ userId: userId });
-    console.log(posts);
-    res.status(200).json({ posts: posts, userId });
+    return res.status(200).json({ posts: posts, userId });
   } catch (err) {
     newError(err, next);
   }
@@ -38,8 +37,7 @@ const getAddPage = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const username = req.params.username;
-    console.log("getAddPage: ", userId, username);
-    res.render("prof/add-post", { username, userId });
+    return res.render("prof/add-post", { username, userId });
   } catch (err) {
     newError(err, next);
   }
@@ -48,8 +46,7 @@ const getAddPage = async (req, res, next) => {
 const getEditProfilePage = async (req, res, next) => {
   try {
     const username = req.params.username;
-    console.log(username);
-    res.status(200).render("prof/edit-profile", { username });
+    return res.status(200).render("prof/edit-profile", { username });
   } catch (err) {
     newError(err, next);
   }
@@ -60,10 +57,9 @@ const EditProfile = async (req, res, next) => {
     const oldUsername = req.params.username;
     const username = req.body.username;
     const bio = req.body.bio;
-    console.log(oldUsername, username, bio);
     let avatar;
     if (req.file) {
-      avatar = req.file.path;
+      avatar = req.file.path.replace(/\\/g, "/");
     }
     const user = await User.findOneAndUpdate(
       { username: oldUsername },
@@ -75,13 +71,13 @@ const EditProfile = async (req, res, next) => {
       { new: true }
     );
     await user.save();
-    res.status(201).redirect(`profile/${username}`);
+    return res.status(201).redirect(`/profile/${username}`);
   } catch (err) {
     newError(err, next);
   }
 };
 
-const postPost = async (req, res) => {
+const postPost = async (req, res, next) => {
   try {
     const username = req.params.username;
     const { title, text } = req.body;
@@ -94,14 +90,13 @@ const postPost = async (req, res) => {
     const newPost = await post.save();
 
     await User.findByIdAndUpdate(userId, { $push: { posts: newPost._id } });
-
-    res.status(201).redirect(`profile/${username}`);
+    return res.status(201).redirect(`/profile/${username}`);
   } catch (err) {
     newError(err, next);
   }
 };
 
-const updatePost = async (req, res) => {
+const updatePost = async (req, res, next) => {
   try {
     const username = req.params.username;
     const { id } = req.params;
@@ -114,13 +109,13 @@ const updatePost = async (req, res) => {
       },
       { new: true }
     );
-    res.status(201).redirect(`profile/${username}`);
+    return res.status(201).redirect(`/profile/${username}`);
   } catch (err) {
     newError(err, next);
   }
 };
 
-const deletePost = async (req, res) => {
+const deletePost = async (req, res, next) => {
   try {
     const { id } = req.params;
     const deletePost = await Post.findByIdAndDelete(id);
@@ -129,7 +124,7 @@ const deletePost = async (req, res) => {
     }
     await User.findByIdAndUpdate(deletePost.userId, { $pull: { posts: id } });
 
-    res.status(201).json({ message: "Post deleted" });
+    return res.status(201).json({ message: "Post deleted" });
   } catch (err) {
     newError(err, next);
   }

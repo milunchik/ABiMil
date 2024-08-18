@@ -4,7 +4,7 @@
   <%- include('../blocks/header') -%>
   <div class="user-profile">
     <div class="add-post-container">
-      <form method="POST" action="/profile/<%=username%>/update">
+      <form method="POST" action="/profile/<%=username%>/update" enctype="multipart/form-data">
         <input type="file" name="avatar" placeholder="Add avatar">
         <input type="text" name="username" id="username" placeholder="Enter the username">
         <input type="text" name="bio" id="bio" placeholder="Enter the bIO">
@@ -12,7 +12,7 @@
       </form>
   </div>
   </div>
-<%- include('../blocks/footer') -%>
-    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
-    <script src="/js/profile.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+  <script src="/js/profile.js"></script>
+<%- include('../blocks/footer') -%>  
 <%- include('../blocks/end') -%>
