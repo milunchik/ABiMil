@@ -57,9 +57,10 @@ async function getPosts(userId, postList) {
 
         if (post.imgUrl) {
           const img = document.createElement("img");
+          img.src = `/${post.imgUrl}`;
+
           const div = document.createElement("div");
           div.classList.add("image-container");
-          img.src = post.imgUrl;
           div.appendChild(img);
           li.appendChild(div);
         }

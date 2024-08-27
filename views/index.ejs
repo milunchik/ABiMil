@@ -9,6 +9,11 @@
                     <h2><%= post.title %></h2>
                     <p><%= post.text %></p>
                     <span>User: <%= post.username %></span><br>
+                    <% if (post.imgUrl) { %>
+                        <div class="image-container">
+                            <img src="/<%= post.imgUrl %>"></img>
+                        </div>
+                    <% } %>
                 </div> 
             </div>
         <% }) %>
