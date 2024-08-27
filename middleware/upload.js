@@ -21,7 +21,6 @@ var upload = multer({
     ) {
       callback(null, true);
     } else {
-      console.log("only jpg and png file support");
       callback(null, false);
     }
   },

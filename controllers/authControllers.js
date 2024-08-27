@@ -70,7 +70,6 @@ const login = async (req, res, next) => {
       const token = generateAccessToken(user._id, user.roles);
 
       res.set("Authorization", `Bearer ${token}`);
-      console.log(token);
       res.cookie("jwt", token, { httpOnly: true, secure: false });
 
       return res.json({ token, userId: user._id, username });
@@ -110,7 +109,6 @@ const postReset = async (req, res) => {
     user.resetTokenExpiration = Date.now() + 3600000;
 
     await user.save();
-    console.log("Token saved:", user.resetToken);
 
     res.status(201).redirect(`/reset/${resetToken}`);
   } catch (err) {
@@ -121,12 +119,10 @@ const postReset = async (req, res) => {
 const getNewPassword = async (req, res) => {
   try {
     const token = req.params.token;
-    console.log("токен з параметрів " + token);
     const user = await User.findOne({
       resetToken: token,
       resetTokenExpiration: { $gt: Date.now() },
     });
-    console.log(user);
     if (!user) {
       return res.status(400).json({ message: "Invalid or expired token" });
     }
@@ -197,7 +193,6 @@ const getAllPosts = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-  // res.localStorage.removeItem("jwt");
   res.cookie("jwt", "", { maxAge: 1 });
   res.redirect("/");
 };

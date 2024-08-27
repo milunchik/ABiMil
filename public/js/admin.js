@@ -35,7 +35,6 @@ const getAdminUsers = async (req, res) => {
               });
 
               if (response.ok) {
-                console.log("User deleted");
                 list.removeChild(li);
               }
             } catch (err) {
@@ -48,7 +47,6 @@ const getAdminUsers = async (req, res) => {
           updateButton.classList.add("update-button");
           li.appendChild(updateButton);
           updateButton.addEventListener("click", async () => {
-            console.log("update");
             const id = li.dataset._id;
             try {
               const response = await fetch(`/user/update/${id}`, {
@@ -59,7 +57,6 @@ const getAdminUsers = async (req, res) => {
               });
 
               if (response.ok) {
-                console.log("User updated");
               }
             } catch (err) {
               console.log(err);
