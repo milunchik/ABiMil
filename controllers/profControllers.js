@@ -82,12 +82,16 @@ const postPost = async (req, res, next) => {
     const username = req.params.username;
     const { title, text } = req.body;
     const userId = req.user.id;
-    const post = new Post({
+    let imgUrl;
+    if (req.file) {
+      imgUrl = req.file.path.replace(/\\/g, "/");
+    }
+    const newPost = await Post.create({
       title,
       text,
       userId,
+      imgUrl,
     });
-    const newPost = await post.save();
 
     await User.findByIdAndUpdate(userId, { $push: { posts: newPost._id } });
     return res.status(201).redirect(`/profile/${username}`);

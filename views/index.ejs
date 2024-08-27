@@ -2,11 +2,6 @@
 </head>
 <body>
     <%- include('blocks/header') -%>
-    <div class="content">
-        <h1>Main Page</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est exercitationem maxime tempore fugiat suscipit optio adipisci quod. Laboriosam sequi enim sunt delectus. Expedita veniam laudantium vero itaque laboriosam ea velit?</p>
-    </div>
-    
     <div class="posts">
         <% posts.forEach(post => { %>
             <div class="post-container">
@@ -14,6 +9,11 @@
                     <h2><%= post.title %></h2>
                     <p><%= post.text %></p>
                     <span>User: <%= post.username %></span><br>
+                    <% if (post.imgUrl) { %>
+                        <div class="image-container">
+                            <img src="/<%= post.imgUrl %>"></img>
+                        </div>
+                    <% } %>
                 </div> 
             </div>
         <% }) %>

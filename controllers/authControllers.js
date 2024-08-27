@@ -83,7 +83,7 @@ const login = async (req, res, next) => {
   }
 };
 
-const getReset = async (req, res) => {
+const getReset = async (req, res, next) => {
   try {
     res.status(200).render("auth/reset");
   } catch (err) {
@@ -91,7 +91,7 @@ const getReset = async (req, res) => {
   }
 };
 
-const postReset = async (req, res) => {
+const postReset = async (req, res, next) => {
   try {
     const username = req.body.username;
     const user = await User.findOne({ username: username });
@@ -116,7 +116,7 @@ const postReset = async (req, res) => {
   }
 };
 
-const getNewPassword = async (req, res) => {
+const getNewPassword = async (req, res, next) => {
   try {
     const token = req.params.token;
     const user = await User.findOne({
@@ -133,7 +133,7 @@ const getNewPassword = async (req, res) => {
   }
 };
 
-const postNewPassword = async (req, res) => {
+const postNewPassword = async (req, res, next) => {
   try {
     const newPassword = req.body.password;
     const userId = req.body.userId;
@@ -159,7 +159,7 @@ const postNewPassword = async (req, res) => {
   }
 };
 
-const getAllPosts = async (req, res) => {
+const getAllPosts = async (req, res, next) => {
   try {
     const page = +req.query.page || 1;
     let totalProducts;
@@ -173,6 +173,7 @@ const getAllPosts = async (req, res) => {
     for (const post of posts) {
       const user = await User.findById(post.userId).lean();
       post.username = user ? user.username : "Unknown";
+      post.avatar = user ? user.avatar : null;
     }
 
     res.render("index", {

@@ -17,7 +17,6 @@ module.exports = function (roles) {
       }
       next();
     } catch (err) {
-      console.log(err);
       return res.status(400).json({ message: "The user is not authorized" });
     }
   };

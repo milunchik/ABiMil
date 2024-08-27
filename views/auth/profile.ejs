@@ -1,28 +1,18 @@
-<%- include('../blocks/head') -%>
+<%- include('../blocks/head') -%> 
 <body>
-  <%- include('../blocks/header') -%>
-  <div class="user-profile">
-    <div class="profile-info">
-      <img src="/<%=avatar %>" class="avatar" />
-      <p class="username"><%= username %></p>
-      <p><%=bio %></p>
+    <%- include('../blocks/header') -%>
+    <div class="user-profile">
+        <div class="profile-info">
+            <img src="/<%= avatar %>" class="avatar">
+            <p class="username"><%= username %></p>
+            <p><%= bio %></p>
+        </div>
+        <div class="post-container">
+            <h1>POSTS</h1>
+            <ul class="posts-list"></ul>
+        </div>
     </div>
-    <div class="post-container">
-      <h1>POSTS</h1>
-      <ul class="posts-list">
-        <% posts.forEach(function(post) { %>
-        <li>
-          <p>
-            <strong><%= post.title %></strong>
-            <br />
-            <%= post.text %>
-          </p>
-        </li>
-        <% }); %>
-      </ul>
-    </div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
-  <script src="/js/profile.js"></script>
-  <%- include('../blocks/footer') -%>
-<%- include('../blocks/end') -%>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    <script src="/js/profile.js"></script>
+    <%- include('../blocks/footer') -%> 
+    <%- include('../blocks/end') -%> 
