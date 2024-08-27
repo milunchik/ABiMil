@@ -70,7 +70,6 @@ const login = async (req, res, next) => {
       const token = generateAccessToken(user._id, user.roles);
 
       res.set("Authorization", `Bearer ${token}`);
-      console.log(token);
       res.cookie("jwt", token, { httpOnly: true, secure: false });
 
       return res.json({ token, userId: user._id, username });
@@ -84,7 +83,7 @@ const login = async (req, res, next) => {
   }
 };
 
-const getReset = async (req, res) => {
+const getReset = async (req, res, next) => {
   try {
     res.status(200).render("auth/reset");
   } catch (err) {
@@ -92,7 +91,7 @@ const getReset = async (req, res) => {
   }
 };
 
-const postReset = async (req, res) => {
+const postReset = async (req, res, next) => {
   try {
     const username = req.body.username;
     const user = await User.findOne({ username: username });
@@ -110,7 +109,6 @@ const postReset = async (req, res) => {
     user.resetTokenExpiration = Date.now() + 3600000;
 
     await user.save();
-    console.log("Token saved:", user.resetToken);
 
     res.status(201).redirect(`/reset/${resetToken}`);
   } catch (err) {
@@ -118,15 +116,13 @@ const postReset = async (req, res) => {
   }
 };
 
-const getNewPassword = async (req, res) => {
+const getNewPassword = async (req, res, next) => {
   try {
     const token = req.params.token;
-    console.log("токен з параметрів " + token);
     const user = await User.findOne({
       resetToken: token,
       resetTokenExpiration: { $gt: Date.now() },
     });
-    console.log(user);
     if (!user) {
       return res.status(400).json({ message: "Invalid or expired token" });
     }
@@ -137,7 +133,7 @@ const getNewPassword = async (req, res) => {
   }
 };
 
-const postNewPassword = async (req, res) => {
+const postNewPassword = async (req, res, next) => {
   try {
     const newPassword = req.body.password;
     const userId = req.body.userId;
@@ -163,7 +159,7 @@ const postNewPassword = async (req, res) => {
   }
 };
 
-const getAllPosts = async (req, res) => {
+const getAllPosts = async (req, res, next) => {
   try {
     const page = +req.query.page || 1;
     let totalProducts;
@@ -177,6 +173,7 @@ const getAllPosts = async (req, res) => {
     for (const post of posts) {
       const user = await User.findById(post.userId).lean();
       post.username = user ? user.username : "Unknown";
+      post.avatar = user ? user.avatar : null;
     }
 
     res.render("index", {
@@ -197,7 +194,6 @@ const getAllPosts = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-  // res.localStorage.removeItem("jwt");
   res.cookie("jwt", "", { maxAge: 1 });
   res.redirect("/");
 };

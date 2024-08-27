@@ -15,7 +15,12 @@ router.post(
 
 router.get("/:userId/posts", isAuth, controllers.getPosts);
 router.get("/:username/newpost", isAuth, controllers.getAddPage);
-router.post("/:username/newpost", isAuth, controllers.postPost);
+router.post(
+  "/:username/newpost",
+  isAuth,
+  upload.single("imgUrl"),
+  controllers.postPost
+);
 
 router.put("/update/:id", isAuth, controllers.updatePost);
 router.delete("/delete/:id", isAuth, controllers.deletePost);

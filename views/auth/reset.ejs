@@ -1,15 +1,18 @@
-<%-include('../blocks/head')%>
+<%- include('../blocks/head') %>
 <body>
-    <%-include('../blocks/header')%>
-<main>
-    <form class="login-container" action="/reset" method="POST">
+  <%- include('../blocks/header') %>
+  <main>
+    <div class="reset-container">
+      <h1>Reset Password</h1>
+      <form action="/reset" method="POST">
         <div>
-            <label for="username">Username</label>
-            <input type="text" name="username" id="username">
+          <label for="username">Username</label>
+          <input type="text" name="username" id="username" required>
         </div>
-            <button>Reset</button>
-    </form>
-</main>
+        <button type="submit">Reset</button>
+      </form>
+    </div>
+  </main>
+  <%- include('../blocks/footer') %>
+  <%- include('../blocks/end') %>
 </body>
-<%-include('../blocks/footer')%>
-<%-include('../blocks/end')%>

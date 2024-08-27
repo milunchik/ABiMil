@@ -5,7 +5,6 @@ function isAuth(req, res, next) {
   const token = req.cookies.jwt;
 
   if (!token) {
-    console.log("default");
     res.locals.isAuth = false;
     res.locals.userId = null;
     res.locals.username = null;
@@ -20,7 +19,6 @@ function isAuth(req, res, next) {
     res.locals.username = decodedToken.username;
     next();
   } catch (err) {
-    console.log("from catch");
     res.locals.isAuth = false;
     res.locals.userId = null;
     res.locals.username = null;
